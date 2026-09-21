@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctors - CityCare Hospital</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif;}
+body{background:#f8f9fb; color:#333;}
+a{text-decoration:none;}
+.top-bar{background:#d90429; color:white; padding:8px 5%; display:flex; justify-content:space-between; font-size:14px; flex-wrap:wrap;}
+.top-bar a{background:white; color:#d90429; padding:6px 15px; border-radius:20px; font-weight:bold;}
+header{background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.05); position:sticky; top:0; z-index:1000;}
+.logo{font-size:24px; font-weight:800; color:#0d3b66;} .logo span{color:#d90429;}
+.nav-links{display:flex; gap:20px; align-items:center;}
+.nav-links a{color:#333; font-weight:500;} .nav-links .cta{background:#0d3b66; color:white; padding:10px 20px; border-radius:6px;}
+.menu-btn{display:none; font-size:24px; cursor:pointer;}
+
+.page-header{background:linear-gradient(rgba(13,59,102,0.9), rgba(13,59,102,0.9)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80'); background-size:cover; color:white; padding:50px 5%; text-align:center;}
+.page-header h1{font-size:32px;}
+
+.filter-wrap{background:white; max-width:1200px; margin:-25px auto 20px; padding:20px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.08); display:flex; gap:15px; flex-wrap:wrap; justify-content:center; position:relative; z-index:2;}
+.filter-wrap input, .filter-wrap select{padding:12px 15px; border:1px solid #ddd; border-radius:8px; font-size:14px; min-width:220px; outline:none;}
+.filter-wrap button{background:#0d3b66; color:white; border:none; padding:12px 25px; border-radius:8px; cursor:pointer; font-weight:600;}
+
+.section{padding:20px 5% 50px; max-width:1200px; margin:auto;}
+.grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:25px;}
+.doc-card{background:white; border-radius:15px; overflow:hidden; box-shadow:0 5px 20px rgba(0,0,0,0.06); border:1px solid #eee; display:flex; flex-direction:column; transition:0.3s;}
+.doc-card:hover{transform:translateY(-4px);}
+.doc-top{display:flex; gap:15px; padding:20px;}
+.doc-top img{width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #eef4ff;}
+.doc-top h3{color:#0d3b66; font-size:18px; margin-bottom:3px;}
+.doc-top span{font-size:13px; color:#d90429; font-weight:600;}
+.doc-top p{font-size:13px; color:#666; margin-top:4px;}
+.doc-mid{padding:0 20px 15px; font-size:14px; line-height:1.7; flex:1;}
+.doc-mid b{color:#0d3b66;}
+.tag{display:inline-block; background:#eef4ff; color:#0d3b66; padding:4px 10px; border-radius:20px; font-size:12px; margin:3px 3px 0 0;}
+.doc-bottom{padding:15px 20px; background:#f8f9fb; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+.fee{font-weight:700; color:#0d3b66;}
+.book-btn{background:#d90429; color:white; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; font-weight:600;}
+
+.no-result{display:none; text-align:center; padding:40px; background:white; border-radius:12px; color:#666;}
+
+@media(max-width:768px){
+ .nav-links{position:fixed; top:70px; left:-100%; width:100%; background:white; flex-direction:column; padding:20px; transition:0.3s;}
+ .nav-links.active{left:0;}
+ .menu-btn{display:block;}
+ .filter-wrap input, .filter-wrap select{min-width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar"><span>24/7 Emergency</span><span>Hotline: +92 42 111-000-911</span><a href="tel:+9242111000911">Call Ambulance</a></div>
+
+<header>
+  <div class="logo"><i class="fa-solid fa-heart-pulse"></i>Life<span>line</span></div>
+  <div class="menu-btn" id="menuBtn"><i class="fa-solid fa-bars"></i></div>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="departments.html">Departments</a>
+    <a href="doctors.html">Doctors</a>
+    <a href="appointment.html">Appointment</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page-header">
+  <h1>Find Your Specialist Doctor</h1>
+  <p>Search by name, department & availability - 50+ verified specialists</p>
+</div>
+
+<div class="filter-wrap">
+  <input type="text" id="searchName" placeholder="Search Doctor Name..." onkeyup="filterDoctors()">
+  <select id="deptFilter" onchange="filterDoctors()">
+    <option value="all">All Departments</option>
+    <option value="cardiology">Cardiology</option>
+    <option value="neurology">Neurology</option>
+    <option value="pediatrics">Pediatrics</option>
+    <option value="orthopedics">Orthopedics</option>
+    <option value="emergency">Emergency</option>
+  </select>
+  <select id="dayFilter" onchange="filterDoctors()">
+    <option value="all">Any Day</option>
+    <option value="today">Today</option>
+    <option value="tomorrow">Tomorrow</option>
+    <option value="weekend">Weekend (Sat-Sun)</option>
+  </select>
+  <button onclick="resetFilter()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+</div>
+
+<section class="section">
+<div class="grid" id="doctorGrid">
+
+  <!-- Doctor 1 -->
+  <div class="doc-card" data-name="ayesha khan" data-dept="cardiology" data-day="today">
+    <div class="doc-top"><img src="WhatsApp Image 2026-09-20 at 10.37.36 PM.jpeg">
+      <div><h3>Dr.Kalsum</h3><span>MBBS, FCPS - Senior Cardiologist</span><p><i class="fa-solid fa-award"></i> 15+ Years Experience</p></div>
+    </div>
+    <div class="doc-mid">
+      <p><b>OPD Days:</b> Mon, Wed, Fri - Today Available</p>
+      <p><b>Time Slots:</b> 09:00 AM - 02:00 PM</p>
+      <div><span class="tag">ECG</span><span class="tag">Angiography</span><span class="tag">Heart Failure</span></div>
+    </div>
+    <div class="doc-bottom"><span class="fee">Fee: Rs. 2000</span><button class="book-btn" onclick="bookDoctor('Dr. Ayesha Khan','Cardiology')">Book Appointment</button></div>
+  </div>
+
+  <!-- Doctor 2 -->
+  <div class="doc-card" data-name="usman ali" data-dept="neurology" data-day="tomorrow">
+    <div class="doc-top"><img src="WhatsApp Image 2026-09-20 at 10.35.40 PM.jpeg">
+      <div><h3>Dr.Muhammad shahid mustafa</h3><span>MBBS, FCPS Neurology</span><p><i class="fa-solid fa-award"></i> 12+ Years Experience</p></div>
+    </div>
+    <div class="doc-mid">
+      <p><b>OPD Days:</b> Tue, Thu, Sat - Tomorrow</p>
+      <p><b>Time Slots:</b> 11:00 AM - 05:00 PM</p>
+      <div><span class="tag">Brain MRI</span><span class="tag">Stroke</span><span class="tag">EEG</span></div>
+    </div>
+    <div class="doc-bottom"><span class="fee">Fee: Rs. 2500</span><button class="book-btn" onclick="bookDoctor('Dr. Usman Ali','Neurology')">Book Appointment</button></div>
+  </div>
+
+  <!-- Doctor 3 -->
+  <div class="doc-card" data-name="sara ahmed" data-dept="pediatrics" data-day="today">
+    <div class="doc-top"><img src="WhatsApp Image 2026-09-20 at 10.33.44 PM.jpeg">
+      <div><h3>Dr. Madiha Islam</h3><span>MBBS, DCH - Child Specialist</span><p><i class="fa-solid fa-award"></i> 10+ Years Experience</p></div>
+    </div>
+    <div class="doc-mid">
+      <p><b>OPD Days:</b> Daily - Today Available</p>
+      <p><b>Time Slots:</b> 09:00 AM - 09:00 PM</p>
+      <div><span class="tag">NICU</span><span class="tag">Vaccination</span><span class="tag">Child Growth</span></div>
+    </div>
+    <div class="doc-bottom"><span class="fee">Fee: Rs. 1500</span><button class="book-btn" onclick="bookDoctor('Dr. Sara Ahmed','Pediatrics')">Book Appointment</button></div>
+  </div>
+
+  <!-- Doctor 4 -->
+  <div class="doc-card" data-name="imran shah" data-dept="orthopedics" data-day="weekend">
+    <div class="doc-top"><img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80">
+      <div><h3>Dr. Imran Shah</h3><span>MS Ortho - Joint Specialist</span><p><i class="fa-solid fa-award"></i> 18+ Years Experience</p></div>
+    </div>
+    <div class="doc-mid">
+      <p><b>OPD Days:</b> Sat-Sun - Weekend</p>
+      <p><b>Time Slots:</b> 10:00 AM - 04:00 PM</p>
+      <div><span class="tag">Knee Replacement</span><span class="tag">Fracture</span><span class="tag">Sports Injury</span></div>
+    </div>
+    <div class="doc-bottom"><span class="fee">Fee: Rs. 2200</span><button class="book-btn" onclick="bookDoctor('Dr. Imran Shah','Orthopedics')">Book Appointment</button></div>
+  </div>
+
+  <!-- Doctor 5 -->
+  <div class="doc-card" data-name="fatima raza" data-dept="emergency" data-day="today">
+    <div class="doc-top"><img src="https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=200&q=80">
+      <div><h3>Dr. Fatima Raza</h3><span>MBBS, MCPS - ER Specialist</span><p><i class="fa-solid fa-award"></i> 8+ Years Experience</p></div>
+    </div>
+    <div class="doc-mid">
+      <p><b>OPD Days:</b> 24/7 Emergency Duty - Today</p>
+      <p><b>Time Slots:</b> 24/7 Available</p>
+      <div><span class="tag">Trauma</span><span class="tag">ICU</span><span class="tag">Life Support</span></div>
+    </div>
+    <div class="doc-bottom"><span class="fee">Fee: Rs. 1800</span><button class="book-btn" onclick="bookDoctor('Dr. Fatima Raza','Emergency')">Book Appointment</button></div>
+  </div>
+
+</div>
+
+<div class="no-result" id="noResult"><i class="fa-solid fa-magnifying-glass" style="font-size:40px; color:#ccc; margin-bottom:10px;"></i><h3>No Doctor Found</h3><p>Try different name or department</p></div>
+
+</section>
+
+<footer style="background:#081f36; color:#ccc; padding:30px 5%; text-align:center;">© 2026 CityCare Hospital - Doctor Directory</footer>
+
+<script>
+// Mobile menu
+document.getElementById('menuBtn').addEventListener('click', ()=>{
+  document.getElementById('navLinks').classList.toggle('active');
+});
+
+// Filter Logic - JAVA
+function filterDoctors(){
+  let nameVal = document.getElementById('searchName').value.toLowerCase();
+  let deptVal = document.getElementById('deptFilter').value;
+  let dayVal = document.getElementById('dayFilter').value;
+  let cards = document.querySelectorAll('.doc-card');
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    let name = card.dataset.name;
+    let dept = card.dataset.dept;
+    let day = card.dataset.day;
+
+    let matchName = name.includes(nameVal);
+    let matchDept = (deptVal === 'all' || dept === deptVal);
+    let matchDay = (dayVal === 'all' || day === dayVal);
+
+    if(matchName && matchDept && matchDay){
+      card.style.display = 'flex';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  document.getElementById('noResult').style.display = visibleCount === 0 ? 'block' : 'none';
+}
+
+function resetFilter(){
+  document.getElementById('searchName').value = '';
+  document.getElementById('deptFilter').value = 'all';
+  document.getElementById('dayFilter').value = 'all';
+  filterDoctors();
+}
+
+// Booking with pre-selected doctor
+function bookDoctor(docName, deptName){
+  // localStorage me save taake appointment page pe auto select ho jaye
+  localStorage.setItem('selectedDoctor', docName);
+  localStorage.setItem('selectedDept', deptName);
+  window.location.href = 'appointment.html?doctor=' + encodeURIComponent(docName);
+}
+</script>
+
+</body>
+</html>

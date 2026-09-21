@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Appointment - CityCare</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif;}
+body{background:#f8f9fb;}
+a{text-decoration:none;}
+header{background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.05); position:sticky; top:0; z-index:1000;}
+.logo{font-size:24px; font-weight:800; color:#0d3b66;}.logo span{color:#d90429;}
+.nav-links{display:flex; gap:20px; align-items:center;}.nav-links a{color:#333; font-weight:500;}
+.menu-btn{display:none; font-size:24px; cursor:pointer;}
+
+.page-header{background:linear-gradient(rgba(13,59,102,0.9), rgba(13,59,102,0.9)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80'); background-size:cover; color:white; padding:40px 5%; text-align:center;}
+.page-header h1{font-size:30px;}
+
+/* Stepper */
+.stepper{max-width:900px; margin:30px auto 10px; padding:0 5%; display:flex; justify-content:space-between;}
+.step{display:flex; align-items:center; gap:8px; font-size:14px; color:#999; font-weight:600;}
+.step.circle{width:32px; height:32px; border-radius:50%; background:#ddd; color:#666; display:flex; align-items:center; justify-content:center; font-weight:700;}
+.step.active{color:#0d3b66;}.step.active.circle{background:#0d3b66; color:white;}
+.step.done.circle{background:#2ecc71; color:white;}
+.line{flex:1; height:2px; background:#ddd; margin:0 10px; margin-top:16px;}
+
+.form-container{max-width:900px; margin:20px auto 50px; background:white; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.08); padding:30px; }
+.form-step{display:none;}.form-step.active{display:block; animation: fadeIn 0.3s;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)}}
+h2{color:#0d3b66; margin-bottom:20px;}
+label{font-size:14px; font-weight:600; margin-bottom:6px; display:block; color:#444;}
+input, select, textarea{width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; font-size:14px; outline:none; margin-bottom:15px;}
+input:focus, select:focus, textarea:focus{border-color:#0d3b66;}
+.row{display:grid; grid-template-columns:1fr 1fr; gap:15px;}
+.radio-group{display:flex; gap:15px; margin-bottom:15px; flex-wrap:wrap;}
+.radio-chip{border:1px solid #ddd; padding:10px 18px; border-radius:20px; cursor:pointer; font-size:14px; transition:0.2s;}
+.radio-chip.selected{background:#0d3b66; color:white; border-color:#0d3b66;}
+
+.slot-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:10px; margin-bottom:15px;}
+.slot{border:1px solid #ddd; padding:12px; border-radius:8px; text-align:center; cursor:pointer; font-size:14px; font-weight:600;}
+.slot.selected{background:#0d3b66; color:white;}
+.slot.disabled{background:#f1f1f1; color:#aaa; cursor:not-allowed;}
+
+.btns{display:flex; justify-content:space-between; margin-top:20px;}
+.btn{padding:12px 30px; border-radius:8px; border:none; cursor:pointer; font-weight:600;}
+.btn-prev{background:#eee; color:#333;}.btn-next{background:#0d3b66; color:white;}
+
+.summary-box{background:#f8f9fb; padding:20px; border-radius:10px; border:1px dashed #0d3b66; line-height:1.8; font-size:14px;}
+
+/* Success Modal */
+.modal{display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2000; justify-content:center; align-items:center; padding:20px;}
+.modal.active{display:flex;}
+.modal-content{background:white; max-width:450px; width:100%; border-radius:15px; padding:30px; text-align:center; animation: pop 0.3s;}
+@keyframes pop{from{transform:scale(0.8)} to{transform:scale(1)}}
+.token{font-size:42px; font-weight:800; color:#d90429; margin:10px 0;}
+.print-btn{background:#0d3b66; color:white; padding:12px 25px; border:none; border-radius:8px; cursor:pointer; margin-top:15px; width:100%;}
+
+@media(max-width:768px){
+.nav-links{position:fixed; top:70px; left:-100%; width:100%; background:white; flex-direction:column; padding:20px; transition:0.3s;}
+.nav-links.active{left:0;}.menu-btn{display:block;}
+.row{grid-template-columns:1fr;}.stepper{font-size:11px;}.step.circle{width:28px; height:28px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><i class="fa-solid fa-heart-pulse"></i>Life<span>line</span></div>
+  <div class="menu-btn" id="menuBtn"><i class="fa-solid fa-bars"></i></div>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="departments.html">Departments</a>
+    <a href="doctors.html">Doctors</a>
+     <a href="appointment.html">Appointment</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page-header"><h1>Online Appointment Portal</h1><p>Book your consultation in 4 easy steps</p></div>
+
+<div class="stepper">
+  <div class="step active" id="s1"><div class="circle">1</div> Doctor</div><div class="line"></div>
+  <div class="step" id="s2"><div class="circle">2</div> Date & Time</div><div class="line"></div>
+  <div class="step" id="s3"><div class="circle">3</div> Patient</div><div class="line"></div>
+  <div class="step" id="s4"><div class="circle">4</div> Confirm</div>
+</div>
+
+<div class="form-container">
+  <!-- STEP 1 -->
+  <div class="form-step active" id="step1">
+    <h2>Step 1: Doctor & Service Selection</h2>
+    <label>Select Department</label>
+    <select id="dept" onchange="loadDoctors()"><option value="">-- Select Department --</option><option value="cardiology">Cardiology</option><option value="neurology">Neurology</option><option value="pediatrics">Pediatrics</option><option value="orthopedics">Orthopedics</option><option value="emergency">Emergency</option></select>
+    <label>Select Doctor</label>
+    <select id="doctor"><option value="">-- First Select Department --</option></select>
+    <label>Consultation Type</label>
+    <div class="radio-group" id="consultType">
+      <div class="radio-chip selected" data-val="In-Person OPD" onclick="selectChip(this,'consultType')"><i class="fa-solid fa-hospital"></i> In-Person OPD</div>
+      <div class="radio-chip" data-val="Online Consultation" onclick="selectChip(this,'consultType')"><i class="fa-solid fa-video"></i> Online Consultation</div>
+    </div>
+    <div class="btns"><span></span><button class="btn btn-next" onclick="nextStep(1)">Next <i class="fa-solid fa-arrow-right"></i></button></div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="form-step" id="step2">
+    <h2>Step 2: Date & Time Slot</h2>
+    <label>Select Date</label>
+    <input type="date" id="appDate">
+    <label>Available Time Slots</label>
+    <div class="slot-grid" id="slotGrid">
+      <div class="slot" onclick="selectSlot(this)">10:00 AM</div><div class="slot" onclick="selectSlot(this)">11:30 AM</div><div class="slot" onclick="selectSlot(this)">12:30 PM</div><div class="slot" onclick="selectSlot(this)">02:00 PM</div><div class="slot" onclick="selectSlot(this)">04:00 PM</div><div class="slot" onclick="selectSlot(this)">05:30 PM</div><div class="slot disabled">07:00 PM - Booked</div>
+    </div>
+    <div class="btns"><button class="btn btn-prev" onclick="prevStep(2)">Back</button><button class="btn btn-next" onclick="nextStep(2)">Next</button></div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="form-step" id="step3">
+    <h2>Step 3: Patient Information</h2>
+    <label>Patient Type</label>
+    <div class="radio-group" id="patientType">
+      <div class="radio-chip selected" data-val="New Patient" onclick="selectChip(this,'patientType')">New Patient</div>
+      <div class="radio-chip" data-val="Returning Patient" onclick="selectChip(this,'patientType')">Returning Patient</div>
+    </div>
+    <div class="row"><div><label>Full Name</label><input type="text" id="pName" placeholder="Enter Full Name"></div><div><label>Age</label><input type="number" id="pAge" placeholder="e.g. 32"></div></div>
+    <div class="row"><div><label>Gender</label><select id="pGender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div><div><label>Contact Number</label><input type="tel" id="pPhone" placeholder="03XX-XXXXXXX"></div></div>
+    <label>Email (Optional)</label><input type="email" id="pEmail" placeholder="email@example.com">
+    <label>Brief Illness / Reason for Visit</label><textarea id="pHistory" rows="3" placeholder="Describe your symptoms..."></textarea>
+    <div class="btns"><button class="btn btn-prev" onclick="prevStep(3)">Back</button><button class="btn btn-next" onclick="nextStep(3)">Next</button></div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="form-step" id="step4">
+    <h2>Step 4: Confirmation & Token</h2>
+    <div class="summary-box" id="summaryBox"></div>
+    <div class="btns"><button class="btn btn-prev" onclick="prevStep(4)">Back</button><button class="btn btn-next" style="background:#d90429;" onclick="confirmBooking()">Confirm Booking</button></div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal" id="successModal">
+  <div class="modal-content">
+    <i class="fa-solid fa-circle-check" style="font-size:60px; color:#2ecc71;"></i>
+    <h2 style="margin-top:10px;">Appointment Confirmed!</h2>
+    <p>Your Token Number is</p>
+    <div class="token" id="tokenNo">CC-1024</div>
+    <div id="printArea" style="text-align:left; background:#f8f9fb; padding:15px; border-radius:8px; font-size:13px; line-height:1.7;"></div>
+    <button class="print-btn" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Slip</button>
+    <button class="print-btn" style="background:#eee; color:#333; margin-top:8px;" onclick="window.location.href='index.html'">Go to Home</button>
+  </div>
+</div>
+
+<script>
+// Data
+const doctorsByDept = {
+  cardiology: ["Dr. Ayesha Khan - Cardiologist", "Dr. Kamran Iqbal - Cardiac Surgeon"],
+  neurology: ["Dr. Usman Ali - Neurologist", "Dr. Hina Tariq - Neurosurgeon"],
+  pediatrics: ["Dr. Sara Ahmed - Child Specialist", "Dr. Bilal Raza - Neonatologist"],
+  orthopedics: ["Dr. Imran Shah - Orthopedic", "Dr. Nadia Saleem - Physiotherapist"],
+  emergency: ["Dr. Fatima Raza - ER Specialist", "ER Team On Duty"]
+};
+let formData = {consult:"In-Person OPD", patientType:"New Patient", slot:""};
+
+document.getElementById('menuBtn').addEventListener('click', ()=>{document.getElementById('navLinks').classList.toggle('active');});
+
+// Auto-populate from doctors.html
+window.onload = function(){
+  let selectedDoc = localStorage.getItem('selectedDoctor');
+  let selectedDept = localStorage.getItem('selectedDept');
+  if(selectedDept){ document.getElementById('dept').value = selectedDept; loadDoctors(); }
+  if(selectedDoc){
+    setTimeout(()=>{
+      let docSelect = document.getElementById('doctor');
+      for(let opt of docSelect.options){ if(opt.value.includes(selectedDoc)){ docSelect.value = opt.value; break; } }
+    },200);
+  }
+  // Date min = today
+  let today = new Date().toISOString().split('T')[0];
+  document.getElementById('appDate').setAttribute('min', today);
+  document.getElementById('appDate').value = today;
+}
+
+function loadDoctors(){
+  let dept = document.getElementById('dept').value;
+  let docSelect = document.getElementById('doctor');
+  docSelect.innerHTML = '<option value="">-- Select Doctor --</option>';
+  if(doctorsByDept[dept]){
+    doctorsByDept[dept].forEach(d=>{ let o=document.createElement('option'); o.value=d; o.textContent=d; docSelect.appendChild(o); });
+  }
+}
+function selectChip(el, group){
+  document.querySelectorAll('#'+group+'.radio-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  if(group==='consultType') formData.consult = el.dataset.val;
+  if(group==='patientType') formData.patientType = el.dataset.val;
+}
+function selectSlot(el){
+  if(el.classList.contains('disabled')) return;
+  document.querySelectorAll('.slot').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+  formData.slot = el.innerText;
+}
+
+function nextStep(current){
+  // validations
+  if(current===1 && (document.getElementById('dept').value=='' || document.getElementById('doctor').value=='')){ alert('Please select department & doctor'); return; }
+  if(current===2 && formData.slot==''){ alert('Please select a time slot'); return; }
+  if(current===3){
+    if(document.getElementById('pName').value=='' || document.getElementById('pPhone').value=='' ){ alert('Please enter Name & Phone'); return; }
+    // build summary
+    buildSummary();
+  }
+  document.getElementById('step'+current).classList.remove('active');
+  document.getElementById('step'+(current+1)).classList.add('active');
+  updateStepper(current+1);
+}
+function prevStep(current){
+  document.getElementById('step'+current).classList.remove('active');
+  document.getElementById('step'+(current-1)).classList.add('active');
+  updateStepper(current-1);
+}
+function updateStepper(activeNum){
+  document.querySelectorAll('.step').forEach((s,i)=>{
+    s.classList.remove('active','done');
+    if(i+1 < activeNum) s.classList.add('done');
+    if(i+1 == activeNum) s.classList.add('active');
+  });
+}
+function buildSummary(){
+  let html = `<b>Department:</b> ${document.getElementById('dept').value}<br>
+  <b>Doctor:</b> ${document.getElementById('doctor').value}<br>
+  <b>Type:</b> ${formData.consult}<br>
+  <b>Date:</b> ${document.getElementById('appDate').value}<br>
+  <b>Time:</b> ${formData.slot}<br><hr style="margin:10px 0;">
+  <b>Patient:</b> ${document.getElementById('pName').value} (${document.getElementById('pAge').value} Y, ${document.getElementById('pGender').value}) - ${formData.patientType}<br>
+  <b>Phone:</b> ${document.getElementById('pPhone').value}<br>
+  <b>Reason:</b> ${document.getElementById('pHistory').value}`;
+  document.getElementById('summaryBox').innerHTML = html;
+}
+function confirmBooking(){
+  let token = 'CC-' + Math.floor(1000 + Math.random()*9000);
+  document.getElementById('tokenNo').innerText = token;
+  document.getElementById('printArea').innerHTML = document.getElementById('summaryBox').innerHTML + `<br><b>Token:</b> ${token}<br><b>Status:</b> Confirmed`;
+  document.getElementById('successModal').classList.add('active');
+  localStorage.removeItem('selectedDoctor'); // clear
+}
+</script>
+
+</body>
+</html>

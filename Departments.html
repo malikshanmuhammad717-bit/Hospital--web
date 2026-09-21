@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Departments - Lifeline Hospital</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif;}
+body{background:#f8f9fb; color:#333;}
+a{text-decoration:none;}
+.top-bar{background:#d90429; color:white; padding:8px 5%; display:flex; justify-content:space-between; font-size:14px; flex-wrap:wrap;}
+.top-bar a{background:white; color:#d90429; padding:6px 15px; border-radius:20px; font-weight:bold;}
+header{background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.05); position:sticky; top:0; z-index:1000;}
+.logo{font-size:24px; font-weight:800; color:#0d3b66;}.logo span{color:#d90429;}
+.nav-links{display:flex; gap:20px; align-items:center;}
+.nav-links a{color:#333; font-weight:500;}.nav-links.cta{background:#0d3b66; color:white; padding:10px 20px; border-radius:6px;}
+.menu-btn{display:none; font-size:24px; cursor:pointer;}
+
+.page-header{background: linear-gradient(rgba(13,59,102,0.9), rgba(13,59,102,0.9)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80'); background-size:cover; color:white; padding:60px 5%; text-align:center;}
+.page-header h1{font-size:36px; margin-bottom:10px;}
+
+
+.search-wrap{max-width:800px; margin:-25px auto 30px; padding:0 5%;}
+.search-box{background:white; display:flex; align-items:center; padding:12px 20px; border-radius:30px; box-shadow:0 10px 30px rgba(0,0,0,0.1); gap:10px;}
+.search-box input{border:none; outline:none; flex:1; font-size:16px;}
+.search-box i{color:#0d3b66;}
+
+.quick-jump{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:20px 0 30px;}
+.quick-jump button{border:1px solid #0d3b66; background:white; color:#0d3b66; padding:8px 18px; border-radius:20px; cursor:pointer; font-weight:600; transition:0.3s;}
+.quick-jump button.active,.quick-jump button:hover{background:#0d3b66; color:white;}
+
+.section{padding:20px 5% 50px; max-width:1200px; margin:auto;}
+.grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:25px;}
+.dept-card{background:white; border-radius:15px; overflow:hidden; box-shadow:0 5px 20px rgba(0,0,0,0.06); border:1px solid #eee; transition:0.3s;}
+.dept-card:hover{transform:translateY(-5px);}
+.dept-card.top{padding:25px; text-align:center;}
+.dept-card.top i{font-size:45px; color:#d90429; margin-bottom:12px;}
+.dept-card h3{color:#0d3b66; margin-bottom:8px;}
+.dept-card ul{list-style:none; text-align:left; margin:15px 0; padding:0 15px;}
+.dept-card ul li{padding:6px 0; border-bottom:1px dashed #eee; font-size:14px;}
+.dept-card ul li i{color:#0d3b66; margin-right:6px; font-size:12px;}
+.dept-card.foot{padding:15px 25px; background:#f8f9fb; display:flex; justify-content:space-between; align-items:center; font-size:13px;}
+.dept-card.foot button{background:#d90429; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;}
+
+
+.modal{display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2000; justify-content:center; align-items:center; padding:20px;}
+.modal.active{display:flex;}
+.modal-content{background:white; max-width:600px; width:100%; border-radius:15px; padding:30px; position:relative; animation: slideUp 0.3s ease;}
+@keyframes slideUp{from{transform:translateY(30px); opacity:0} to{transform:translateY(0); opacity:1}}
+.close-modal{position:absolute; top:15px; right:20px; font-size:22px; cursor:pointer;}
+.modal-content h2{color:#0d3b66; margin-bottom:10px;}
+.modal-content.badge{display:inline-block; background:#eef4ff; color:#0d3b66; padding:5px 12px; border-radius:20px; font-size:12px; margin:5px 5px 5px 0;}
+
+footer{background:#081f36; color:#ccc; padding:40px 5%; text-align:center; margin-top:30px;}
+
+@media(max-width:768px){
+ .nav-links{position:fixed; top:70px; left:-100%; width:100%; background:white; flex-direction:column; padding:20px; transition:0.3s;}
+ .nav-links.active{left:0;}
+ .menu-btn{display:block;}
+ .page-header h1{font-size:26px;}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>24/7 Emergency</span>
+  <span>Hotline: +92 42 111-000-911</span>
+  <a href="tel:+9242111000911">Call Ambulance</a>
+</div>
+
+<header>
+  <div class="logo"><i class="fa-solid fa-heart-pulse"></i> Life<span>line</span></div>
+  <div class="menu-btn" id="menuBtn"><i class="fa-solid fa-bars"></i></div>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="departments.html">Departments</a>
+    <a href="doctors.html">Doctors</a>
+    <a href="appointment.html">Appointment</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page-header">
+  <h1>Our Medical Specialties & Centers of Excellence</h1>
+  <p>World-class care across 5+ major specialties with advanced technology</p>
+</div>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" id="deptSearch" placeholder="Search department... e.g. Cardiology, Brain, Child" onkeyup="searchDept()">
+  </div>
+</div>
+
+<div class="quick-jump">
+  <button class="active" onclick="filterDept('all', this)">All</button>
+  <button onclick="filterDept('cardiology', this)">Cardiology</button>
+  <button onclick="filterDept('neurology', this)">Neurology</button>
+  <button onclick="filterDept('pediatrics', this)">Pediatrics</button>
+  <button onclick="filterDept('orthopedics', this)">Orthopedics</button>
+  <button onclick="filterDept('emergency', this)">Emergency</button>
+</div>
+
+<section class="section">
+<div class="grid" id="deptGrid">
+
+  <div class="dept-card" data-name="cardiology heart">
+    <div class="top"><i class="fa-solid fa-heart-pulse"></i><h3>Cardiology (Heart Care)</h3><p>Complete heart care unit</p>
+      <ul><li><i class="fa-solid fa-check"></i> ECG, ECHO, Angiography</li><li><i class="fa-solid fa-check"></i> Bypass & Angioplasty</li><li><i class="fa-solid fa-check"></i> Lead: Dr. Kalsum</li><li><i class="fa-solid fa-check"></i> Timings: 9AM - 8PM</li></ul>
+    </div>
+    <div class="foot"><span><i class="fa-solid fa-bed"></i> Private / Deluxe Rooms</span><button onclick="openModal('cardiology')">View Details</button></div>
+  </div>
+
+  <div class="dept-card" data-name="neurology brain spine">
+    <div class="top"><i class="fa-solid fa-brain"></i><h3>Neurology (Brain & Spine)</h3><p>Advanced neuro care center</p>
+      <ul><li><i class="fa-solid fa-check"></i> Brain MRI, EEG, EMG</li><li><i class="fa-solid fa-check"></i> Stroke Management Unit</li><li><i class="fa-solid fa-check"></i> Lead: Dr. Muhmmad Shahid mustafa</li><li><i class="fa-solid fa-check"></i> Timings: 10AM - 6PM</li></ul>
+    </div>
+    <div class="foot"><span><i class="fa-solid fa-bed"></i> Neuro ICU Available</span><button onclick="openModal('neurology')">View Details</button></div>
+  </div>
+
+  <div class="dept-card" data-name="pediatrics child nicu">
+    <div class="top"><i class="fa-solid fa-baby"></i><h3>Pediatrics (Child Health)</h3><p>Special care for children</p>
+      <ul><li><i class="fa-solid fa-check"></i> Vaccinations & Growth Monitoring</li><li><i class="fa-solid fa-check"></i> Neonatal ICU (NICU)</li><li><i class="fa-solid fa-check"></i> Lead: Dr. Madiha Islam</li><li><i class="fa-solid fa-check"></i> Timings: 24/7 Available</li></ul>
+    </div>
+    <div class="foot"><span><i class="fa-solid fa-bed"></i> Mother-Child Rooms</span><button onclick="openModal('pediatrics')">View Details</button></div>
+  </div>
+
+  <div class="dept-card" data-name="orthopedics bone joint">
+    <div class="top"><i class="fa-solid fa-bone"></i><h3>Orthopedics (Bone & Joint)</h3><p>Bone, joint & sports injury</p>
+      <ul><li><i class="fa-solid fa-check"></i> Joint Replacements (Knee/Hip)</li><li><i class="fa-solid fa-check"></i> Fracture & Trauma Care</li><li><i class="fa-solid fa-check"></i> Lead: Dr. Imran Shah</li><li><i class="fa-solid fa-check"></i> Timings: 9AM - 5PM</li></ul>
+    </div>
+    <div class="foot"><span><i class="fa-solid fa-bed"></i> Physio & Rehab Unit</span><button onclick="openModal('orthopedics')">View Details</button></div>
+  </div>
+
+  <div class="dept-card" data-name="emergency trauma icu">
+    <div class="top"><i class="fa-solid fa-truck-medical"></i><h3>Emergency & Trauma</h3><p>24/7 life saving unit</p>
+      <ul><li><i class="fa-solid fa-check"></i> 24/7 ICU, Ventilator, Life Support</li><li><i class="fa-solid fa-check"></i> Ambulance: 10 Min Response</li><li><i class="fa-solid fa-check"></i> Lead: ER Team</li><li><i class="fa-solid fa-check"></i> Timings: 24/7 Open</li></ul>
+    </div>
+    <div class="foot"><span><i class="fa-solid fa-bed"></i> 20 Bedded ER</span><button onclick="openModal('emergency')">View Details</button></div>
+  </div>
+
+</div>
+</section>
+
+
+<div class="modal" id="deptModal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <h2 id="mTitle"></h2>
+    <p id="mDesc" style="margin:10px 0 15px; color:#555;"></p>
+    <div id="mFacilities"></div>
+    <br>
+    <a href="appointment.html" style="background:#0d3b66; color:white; padding:10px 20px; border-radius:6px; display:inline-block;">Book Appointment in this Dept</a>
+  </div>
+</div>
+
+<footer>© 2026 CityCare Hospital - All Departments Working 24/7 Emergency</footer>
+
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.getElementById('navLinks');
+menuBtn.addEventListener('click', () => navLinks.classList.toggle('active'));
+
+
+function searchDept(){
+  let input = document.getElementById('deptSearch').value.toLowerCase();
+  let cards = document.querySelectorAll('.dept-card');
+  cards.forEach(card => {
+    let name = card.getAttribute('data-name');
+    card.style.display = name.includes(input)? 'block' : 'none';
+  });
+}
+
+
+function filterDept(category, btn){
+  document.querySelectorAll('.quick-jump button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  let cards = document.querySelectorAll('.dept-card');
+  cards.forEach(card => {
+    if(category === 'all' || card.getAttribute('data-name').includes(category)){
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+
+const deptData = {
+  cardiology: {title:"Cardiology - Heart Care Center", desc:"State-of-the-art cardiac unit with Cath Lab, Echo, ECG, and cardiac surgery OT.", fac:["Cath Lab","2D Echo","ECG Machine","Ventilator Beds","Private Deluxe Rooms","24/7 Cardiac Monitoring"]},
+  neurology: {title:"Neurology - Brain & Spine Center", desc:"Advanced neuro-diagnostics and stroke management with Neuro ICU.", fac:["3 Tesla Brain MRI","EEG / EMG","Stroke Unit","Neuro ICU","Rehabilitation Unit"]},
+  pediatrics: {title:"Pediatrics - Child Health Center", desc:"Complete child care from newborn to 18 years with NICU and vaccination center.", fac:["NICU (15 Incubators)","Vaccination Center","Growth Monitoring","Phototherapy","Mother Feeding Rooms"]},
+  orthopedics: {title:"Orthopedics - Bone & Joint Center", desc:"Joint replacement, arthroscopy and sports injury management.", fac:["C-Arm X-Ray","Joint Replacement OT","Arthroscopy System","Physiotherapy Unit","Plaster Room"]},
+  emergency: {title:"Emergency & Trauma Center - 24/7", desc:"Fully equipped 20 bedded ER with ambulance, ICU and life support.", fac:["20 ER Beds","10 Ventilators","Defibrillator","Ambulance Fleet","Blood Bank","24/7 Lab"]}
+};
+
+function openModal(key){
+  let data = deptData[key];
+  document.getElementById('mTitle').innerText = data.title;
+  document.getElementById('mDesc').innerText = data.desc;
+  let facHtml = data.fac.map(f=>`<span class="badge"><i class="fa-solid fa-check"></i> ${f}</span>`).join('');
+  document.getElementById('mFacilities').innerHTML = facHtml;
+  document.getElementById('deptModal').classList.add('active');
+}
+function closeModal(){document.getElementById('deptModal').classList.remove('active');}
+window.onclick = function(e){ if(e.target.id == 'deptModal') closeModal(); }
+</script>
+
+</body>
+</html>

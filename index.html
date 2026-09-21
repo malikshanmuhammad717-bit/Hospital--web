@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life line Hospital - World Class Healthcare</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif;}
+body{background:#f8f9fb; color:#333;}
+a{text-decoration:none;}
+
+.top-bar{background:#d90429; color:white; padding:8px 5%; display:flex; justify-content:space-between; align-items:center; font-size:14px; flex-wrap:wrap; gap:8px;}
+.top-bar a{background:white; color:#d90429; padding:6px 15px; border-radius:20px; font-weight:bold; animation: pulse 1.5s infinite;}
+@keyframes pulse{0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)}}
+
+
+header{background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.05); position:sticky; top:0; z-index:1000;}
+.logo{font-size:24px; font-weight:800; color:#0d3b66;} .logo span{color:#d90429;}
+.nav-links{display:flex; gap:20px; align-items:center;}
+.nav-links a{color:#333; font-weight:500;}
+.nav-links .cta{background:#0d3b66; color:white; padding:10px 20px; border-radius:6px;}
+.menu-btn{display:none; font-size:24px; cursor:pointer;}
+
+.hero{background: linear-gradient(rgba(13,59,102,0.8), rgba(13,59,102,0.8)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80'); background-size:cover; background-position:center; color:white; padding:80px 5%; text-align:center;}
+.hero h1{font-size:42px; max-width:700px; margin:0 auto 20px; line-height:1.2;}
+.hero p{max-width:600px; margin:0 auto 30px; opacity:0.9;}
+
+
+.quick-actions{display:flex; gap:20px; justify-content:center; margin:-40px auto 40px; padding:0 5%; flex-wrap:wrap; max-width:1100px;}
+.q-card{background:white; padding:25px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.1); flex:1; min-width:280px; text-align:center;}
+.q-card i{font-size:30px; color:#0d3b66; margin-bottom:10px;}
+.q-card h3{margin-bottom:10px;}
+.q-card a, .q-card button{display:inline-block; margin-top:10px; background:#0d3b66; color:white; padding:8px 18px; border-radius:5px; border:none; cursor:pointer;}
+.q-card input{width:100%; padding:10px; margin-top:10px; border:1px solid #ddd; border-radius:5px;}
+
+
+.section{padding:50px 5%; max-width:1200px; margin:auto;}
+.section-title{text-align:center; margin-bottom:30px; font-size:28px; color:#0d3b66;}
+.grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px;}
+.dept-card{background:white; padding:25px; border-radius:12px; text-align:center; border:1px solid #eee; transition:0.3s;}
+.dept-card:hover{transform:translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.08);}
+.dept-card i{font-size:35px; color:#d90429; margin-bottom:10px;}
+
+
+.doc-card{background:white; border-radius:12px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.05); text-align:center;}
+.doc-card img{width:100%; height:220px; object-fit:cover;}
+.doc-card .info{padding:20px;}
+
+.stats{background:#0d3b66; color:white; display:flex; justify-content:space-around; flex-wrap:wrap; padding:40px 5%; text-align:center; gap:20px;}
+.stats h2{font-size:36px;}
+
+
+.testi-card{background:white; padding:25px; border-radius:12px; border-left:4px solid #d90429;}
+footer{background:#081f36; color:#ccc; padding:40px 5%; display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:30px;}
+footer h4{color:white; margin-bottom:15px;}
+footer a{color:#ccc; display:block; margin-bottom:8px;}
+
+
+@media(max-width:768px){
+  .nav-links{position:fixed; top:70px; left:-100%; width:100%; background:white; flex-direction:column; padding:20px; transition:0.3s; box-shadow:0 5px 10px rgba(0,0,0,0.1);}
+  .nav-links.active{left:0;}
+  .menu-btn{display:block;}
+  .hero h1{font-size:30px;}
+  .top-bar{justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span><i class="fa-solid fa-clock"></i> 24/7 Emergency Service Available</span>
+  <span><i class="fa-solid fa-phone"></i> Hotline: +92 42 111-000-911</span>
+  <a href="tel:+9242111000911"><i class="fa-solid fa-truck-medical"></i> Call Ambulance</a>
+</div>
+
+<header>
+  <div class="logo"><i class="fa-solid fa-heart-pulse"></i> Life<span>line</span></div>
+  <div class="menu-btn" id="menuBtn"><i class="fa-solid fa-bars"></i></div>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="departments.html">Departments</a>
+    <a href="doctors.html">Doctors</a> 
+    <a href="appointment.html">Appointment</a>
+    <a href="contact.html">Contact</a>
+    <a href="appointment.html" class="cta">Book Appointment</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Providing World-Class Healthcare With Compassion</h1>
+  <p>Your health is our priority. 50+ specialists, advanced technology and 24/7 emergency care under one roof.</p>
+</section>
+
+<div class="quick-actions">
+  <div class="q-card">
+    <i class="fa-solid fa-user-doctor"></i>
+    <h3>Find a Doctor</h3>
+    <p>Search by specialty and availability</p>
+    <a href="doctors.html">Search Doctor</a>
+  </div>
+  <div class="q-card">
+    <i class="fa-solid fa-calendar-check"></i>
+    <h3>Book Appointment</h3>
+    <p>Get instant confirmation on WhatsApp</p>
+    <a href="appointment.html">Book Now</a>
+  </div>
+  <div class="q-card">
+    <i class="fa-solid fa-file-medical"></i>
+    <h3>Download Lab Report</h3>
+    <input type="text" id="patientId" placeholder="Enter Patient ID e.g. 12345">
+    <button onclick="downloadReport()">Get Report</button>
+  </div>
+</div>
+
+<section class="section">
+  <h2 class="section-title">Our Departments</h2>
+  <div class="grid">
+    <div class="dept-card"><i class="fa-solid fa-heart-pulse"></i><h3>Cardiology</h3><p>Advanced heart care with ECG, Echo & Angiography.</p></div>
+    <div class="dept-card"><i class="fa-solid fa-brain"></i><h3>Neurology</h3><p>Expert care for brain, spine and nervous system.</p></div>
+    <div class="dept-card"><i class="fa-solid fa-baby"></i><h3>Pediatrics</h3><p>Compassionate care for your little ones 24/7.</p></div>
+    <div class="dept-card"><i class="fa-solid fa-bone"></i><h3>Orthopedics</h3><p>Joint replacement & trauma care specialists.</p></div>
+  </div>
+</section>
+
+<section class="section" style="background:#fff;">
+  <h2 class="section-title">Featured Doctors</h2>
+  <div class="grid">
+    <div class="doc-card"><img src="WhatsApp Image 2026-09-20 at 10.37.36 PM.jpeg"><div class="info"><h3>Dr. Kalsum</h3><p>Cardiologist</p><a href="appointment.html" class="cta" style="background:#d90429; color:white; padding:6px 12px; border-radius:5px; display:inline-block; margin-top:10px;">Book Now</a></div></div>
+    <div class="doc-card"><img src="c:\Users\Gul\Downloads\WhatsApp Image 2026-09-20 at 10.35.40 PM.jpeg"><div class="info"><h3>Dr. Muhammad Shahid mustafa</h3><p>Neurologist</p><a href="appointment.html" class="cta" style="background:#d90429; color:white; padding:6px 12px; border-radius:5px; display:inline-block; margin-top:10px;">Book Now</a></div></div>
+    <div class="doc-card"><img src="WhatsApp Image 2026-09-20 at 10.33.44 PM.jpeg"><div class="info"><h3>Dr. Madiha Islam</h3><p>Pediatrician</p><a href="appointment.html" class="cta" style="background:#d90429; color:white; padding:6px 12px; border-radius:5px; display:inline-block; margin-top:10px;">Book Now</a></div></div>
+  </div>
+</section>
+
+<div class="stats">
+  <div><h2>50+</h2><p>Specialists</p></div>
+  <div><h2>24/7</h2><p>ER Service</p></div>
+  <div><h2>100k+</h2><p>Patients Treated</p></div>
+  <div><h2>15+</h2><p>Years Experience</p></div>
+</div>
+
+<section class="section">
+  <h2 class="section-title">What Our Patients Say</h2>
+  <div class="grid">
+    <div class="testi-card"><p>"Best hospital in Lahore. Doctors are very caring and lab report system is super fast."</p><strong>- Bilal S.</strong> ⭐⭐⭐⭐⭐</div>
+    <div class="testi-card"><p>"Emergency response was within 10 minutes. Saved my father's life. Highly recommended."</p><strong>- Fatima K.</strong> ⭐⭐⭐⭐⭐</div>
+  </div>
+</section>
+
+<footer>
+  <div><h4>CityCare Hospital</h4><p>Providing world-class healthcare with compassion since 2010.</p><p><i class="fa-solid fa-location-dot"></i> Main Boulevard, Lahore</p><p><i class="fa-solid fa-phone"></i> +92 42 111-000-911</p></div>
+  <div><h4>Quick Links</h4><a href="index.html">Home</a><a href="doctors.html">Doctors</a><a href="appointment.html">Appointment</a><a href="lab.html">Lab Reports</a></div>
+  <div><h4>Working Hours</h4><p>Emergency: 24/7</p><p>OPD: 9AM - 9PM</p><p>Pharmacy: 24/7</p></div>
+  <div><h4>Accredited By</h4><p>🏥 PMDC Certified</p><p>✅ ISO 9001:2015</p><p>Follow: <i class="fa-brands fa-facebook"></i> <i class="fa-brands fa-instagram"></i></p></div>
+</footer>
+
+<script>
+
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.getElementById('navLinks');
+menuBtn.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+
+function downloadReport(){
+  let id = document.getElementById('patientId').value;
+  if(id === ""){
+    alert("Please Enter Patient ID");
+  } else {
+    alert("Downloading report for Patient ID: " + id + "\n(Link this to your lab.html page)");
+    window.location.href = "lab.html?id=" + id;
+  }
+}
+</script>
+
+</body>
+</html>
